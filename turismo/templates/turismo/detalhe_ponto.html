@@ -1,0 +1,20 @@
+{% extends 'turismo/base.html' %} {% block conteudo %}
+<h2 class="text-2xl font-bold mb-4">{{ lugar.nome }}</h2>
+<p class="mb-2">{{ lugar.descricao }}</p>
+
+<h3 class="mt-6 text-lg font-semibold">Avaliações</h3>
+<ul class="mt-2">
+  {% for avaliacao in avaliacoes %}
+  <li class="bg-gray-50 p-2 border rounded mb-2">
+    <strong>{{ avaliacao.visitante.user.username }}</strong>: {{ avaliacao.nota
+    }} ⭐ - "{{ avaliacao.comentario }}"
+  </li>
+  {% empty %}
+  <p>Sem avaliações ainda.</p>
+  {% endfor %}
+</ul>
+
+<a href="{% url 'turismo:avaliar' lugar.id %}" class="btn btn-primary mt-4"
+  >Avaliar este lugar</a
+>
+{% endblock %}

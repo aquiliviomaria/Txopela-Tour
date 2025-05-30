@@ -1,0 +1,26 @@
+{% extends 'turismo/base.html' %} {% block content %}
+<div class="container mt-5">
+  <h2 class="text-center">Pontos Turísticos</h2>
+  <div class="row">
+    {% for lugar in lugares %}
+    <div class="col-md-4 mb-4">
+      <div class="card h-100">
+        <div class="card-body">
+          <h5 class="card-title">{{ lugar.nome }}</h5>
+          <p class="card-text">{{ lugar.descricao|truncatewords:20 }}</p>
+          <a
+            href="{% url 'turismo:detalhe_ponto' lugar.id %}"
+            class="btn btn-primary"
+            >Ver detalhes</a
+          >
+        </div>
+      </div>
+    </div>
+    {% empty %}
+    <p class="text-muted text-center">
+      Nenhum ponto turístico cadastrado ainda.
+    </p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

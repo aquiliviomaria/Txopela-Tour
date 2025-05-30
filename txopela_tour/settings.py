@@ -9,9 +9,7 @@ https://docs.djangoproject.com/en/5.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
-
 import os
-
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -22,7 +20,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-*z5shk3(cgxtwi&_l2f@7vnfnw-v!f9((z77)h0+(%cd3tn(8%'
+SECRET_KEY = 'django-insecure-vft6bwop0_cd4uq8h=9%$t_g2mj*@5l3k(^w7w+=-^ui7doy36'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -39,9 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'turismo',  # Nossa app principal
-    'crispy_forms',  # Para formulários estilizados
-    'crispy_bootstrap5',  # Template pack do Bootstrap 5
+    'usuarios',
+    'turismo',
 ]
 
 MIDDLEWARE = [
@@ -59,7 +56,7 @@ ROOT_URLCONF = 'txopela_tour.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -119,10 +116,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-# Configurações de Arquivos Estáticos e Media
 STATIC_URL = 'static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'turismo/static')]
-
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
@@ -130,15 +124,9 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'turismo/static')]
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [BASE_DIR / 'static']
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-MEDIA_URL = '/media/'  # URL para acessar arquivos de mídia
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # Pasta onde as imagens serão salvas
-
-# Configurações do Crispy Forms
-CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
-CRISPY_TEMPLATE_PACK = "bootstrap5"
-
-# Configurações de Autenticação
-LOGIN_URL = 'login'  # URL para redirecionar se o usuário não estiver logado
-LOGIN_REDIRECT_URL = 'home'  # Página após login bem-sucedido
-LOGOUT_REDIRECT_URL = 'home'  # Página após logout
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / 'media'

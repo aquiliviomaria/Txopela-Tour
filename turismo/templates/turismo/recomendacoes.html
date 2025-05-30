@@ -1,0 +1,16 @@
+{% extends 'turismo/base.html' %} {% block conteudo %}
+<h2 class="text-xl font-semibold mb-4">Recomendações Personalizadas</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+  {% for lugar in locais %}
+  <div class="bg-white p-4 rounded-lg shadow">
+    <h3 class="font-bold text-lg mb-2">{{ lugar.nome }}</h3>
+    <p>{{ lugar.descricao|truncatechars:120 }}</p>
+    <a
+      href="{% url 'turismo:detalhe_ponto' lugar.id %}"
+      class="text-blue-500 hover:underline"
+      >Ver detalhes</a
+    >
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}
