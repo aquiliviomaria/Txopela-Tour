@@ -1,26 +1,48 @@
 {% extends 'turismo/base.html' %} {% block content %}
-<div class="container mt-5">
-  <h2 class="text-center">Pontos Turísticos</h2>
-  <div class="row">
+<div class="container py-5">
+  <h2 class="text-center mb-4 fw-bold">Explore Pontos Turísticos</h2>
+
+  {% if lugares %}
+  <div class="row g-4">
     {% for lugar in lugares %}
-    <div class="col-md-4 mb-4">
-      <div class="card h-100">
-        <div class="card-body">
-          <h5 class="card-title">{{ lugar.nome }}</h5>
-          <p class="card-text">{{ lugar.descricao|truncatewords:20 }}</p>
-          <a
-            href="{% url 'turismo:detalhe_ponto' lugar.id %}"
-            class="btn btn-primary"
-            >Ver detalhes</a
-          >
+    <div class="col-md-6 col-lg-4">
+      <div class="card shadow-sm h-100 border-0">
+        {% if lugar.imagem %}
+        <img
+          src="{{ lugar.imagem.url }}"
+          class="card-img-top rounded-top"
+          alt="{{ lugar.nome }}"
+          style="object-fit: cover; height: 200px"
+        />
+        {% else %}
+        <div
+          class="d-flex align-items-center justify-content-center bg-light"
+          style="height: 200px; font-size: 1.2rem"
+        >
+          Sem imagem
+        </div>
+        {% endif %}
+        <div class="card-body d-flex flex-column">
+          <h5 class="card-title fw-semibold">{{ lugar.nome }}</h5>
+          <p class="card-text text-muted">
+            {{ lugar.descricao|truncatewords:25 }}
+          </p>
+          <div class="mt-auto text-end">
+            <a
+              href="{% url 'turismo:detalhe_ponto' lugar.id %}"
+              class="btn btn-outline-primary btn-sm"
+              >Ver detalhes</a
+            >
+          </div>
         </div>
       </div>
     </div>
-    {% empty %}
-    <p class="text-muted text-center">
-      Nenhum ponto turístico cadastrado ainda.
-    </p>
     {% endfor %}
   </div>
+  {% else %}
+  <div class="text-center text-muted mt-5">
+    <p class="fs-5">Nenhum ponto turístico cadastrado ainda.</p>
+  </div>
+  {% endif %}
 </div>
 {% endblock %}
