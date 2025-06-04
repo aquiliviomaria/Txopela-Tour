@@ -7,10 +7,10 @@ class PontoTuristico(models.Model):
     localizacao = models.CharField(max_length=200)
     imagem = models.ImageField(upload_to='pontos/', null=True, blank=True)
     data_cadastro = models.DateTimeField(auto_now_add=True)
+    categoria = models.CharField(max_length=100, blank=True, null=True) 
 
     def __str__(self):
         return self.nome
-
 class Avaliacao(models.Model):
     visitante = models.ForeignKey(
         settings.AUTH_USER_MODEL, 

@@ -1,4 +1,4 @@
-{% extends 'usuarios/base.html' %} {% block content %}
+{% extends 'turismo/base.html' %} {% block content %}
 <div
   class="container mx-auto max-w-3xl p-6 mt-10 bg-white rounded-xl shadow-md flex"
 >
@@ -27,7 +27,7 @@
     </p>
     <p class="mt-2"><strong>Bio:</strong><br />{{ user.perfilusuario.bio }}</p>
     <a
-      href="{% url 'logout' %}"
+      href="{% url 'usuarios:registro' %}"
       class="btn mt-6 inline-block bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded"
       >Sair</a
     >

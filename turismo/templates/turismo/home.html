@@ -5,8 +5,10 @@
   {% if lugares %}
   <div class="row g-4">
     {% for lugar in lugares %}
-    <div class="col-md-6 col-lg-4">
-      <div class="card shadow-sm h-100 border-0">
+    <div class="col-md-6 col-lg-4" data-aos="fade-up">
+      <div
+        class="card shadow-sm h-100 border-0 hover:shadow-lg transition-shadow duration-300"
+      >
         {% if lugar.imagem %}
         <img
           src="{{ lugar.imagem.url }}"
@@ -31,8 +33,9 @@
             <a
               href="{% url 'turismo:detalhe_ponto' lugar.id %}"
               class="btn btn-outline-primary btn-sm"
-              >Ver detalhes</a
             >
+              Ver detalhes
+            </a>
           </div>
         </div>
       </div>

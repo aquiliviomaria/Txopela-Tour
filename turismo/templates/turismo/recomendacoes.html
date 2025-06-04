@@ -1,16 +1,48 @@
-{% extends 'turismo/base.html' %} {% block conteudo %}
+{% extends 'turismo/base.html' %} {% block content %}
 <h2 class="text-xl font-semibold mb-4">Recomendações Personalizadas</h2>
+
+<!-- Formulário de Preferência -->
+<form
+  method="get"
+  class="mb-6 p-4 bg-white shadow rounded-lg grid grid-cols-1 md:grid-cols-2 gap-4"
+>
+  <div>
+    <label for="id_localizacao" class="block text-sm font-medium"
+      >Localização</label
+    >
+    {{ form.localizacao }}
+  </div>
+  <div>
+    <label for="id_categoria" class="block text-sm font-medium"
+      >Categoria</label
+    >
+    {{ form.categoria }}
+  </div>
+  <div class="md:col-span-2 text-right">
+    <button
+      type="submit"
+      class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+    >
+      Buscar Recomendações
+    </button>
+  </div>
+</form>
+
+<!-- Lista de Recomendações -->
 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
   {% for lugar in locais %}
   <div class="bg-white p-4 rounded-lg shadow">
     <h3 class="font-bold text-lg mb-2">{{ lugar.nome }}</h3>
     <p>{{ lugar.descricao|truncatechars:120 }}</p>
+    <p class="text-sm text-gray-500">Categoria: {{ lugar.categoria }}</p>
     <a
       href="{% url 'turismo:detalhe_ponto' lugar.id %}"
       class="text-blue-500 hover:underline"
       >Ver detalhes</a
     >
   </div>
+  {% empty %}
+  <p>Nenhum local encontrado com essas preferências.</p>
   {% endfor %}
 </div>
 {% endblock %}

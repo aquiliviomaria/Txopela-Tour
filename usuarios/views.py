@@ -30,9 +30,9 @@ def login_usuario(request):
                 if perfil.tipo == 'admin':
                     return redirect('painel_admin')  # admin → painel de gestão
                 else:
-                    return redirect('recomendacoes')  # visitante → recomendações
+                    return redirect('turismo:recomendacoes')  # visitante → recomendações
             else:
-                return redirect('home')  # fallback
+                return redirect('turismo:home')  # fallback
 
     else:
         form = AuthenticationForm()
@@ -41,7 +41,7 @@ def login_usuario(request):
 
 def logout_usuario(request):
     logout(request)
-    return redirect('login')
+    return redirect('usuarios:login')
 
 
 @login_required

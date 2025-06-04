@@ -7,8 +7,8 @@ from turismo import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('turismo.urls')),
-    path('usuarios/', include('usuarios.urls')),
-    path('', views.home, name='home'),
+    path('usuarios/', include('usuarios.urls', namespace='usuarios')),
+    path('usuarios/', include('usuarios.urls', namespace='usuarios')),
 ]
 
 if settings.DEBUG:

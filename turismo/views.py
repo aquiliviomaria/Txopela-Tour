@@ -2,8 +2,11 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import PontoTuristico, Avaliacao, Recomendacao
 from usuarios.models import PerfilUsuario
 from django.contrib.auth.decorators import login_required
+from .forms import PreferenciaForm
+
 
 def home(request):
+    print(">>> View HOME acessada por:", request.user)
     lugares = PontoTuristico.objects.all()
     return render(request, 'turismo/home.html', {'lugares': lugares})
 
@@ -32,8 +35,19 @@ def avaliar(request, lugar_id):
 
 @login_required
 def recomendacoes(request):
-    usuario = request.user.perfilusuario
-    locais_recomendados = PontoTuristico.objects.order_by('?')[:5]  # Simulação de algoritmo
+    locais = PontoTuristico.objects.all()
+    form = PreferenciaForm(request.GET or None)
+
+    if form.is_valid():
+        localizacao = form.cleaned_data.get('localizacao')
+        categoria = form.cleaned_data.get('categoria')
+
+        if localizacao:
+            locais = locais.filter(localizacao__icontains=localizacao)
+        if categoria:
+            locais = locais.filter(categoria__icontains=categoria)
+
     return render(request, 'turismo/recomendacoes.html', {
-        'locais': locais_recomendados
+        'locais': locais,
+        'form': form
     })

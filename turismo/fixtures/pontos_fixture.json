@@ -1,0 +1,222 @@
+[
+  {
+    "model": "turismo.pontoturistico",
+    "pk": 1,
+    "fields": {
+      "nome": "Praia da Polana",
+      "descricao": "Praia famosa de Maputo com águas tranquilas.",
+      "localizacao": "Maputo",
+      "categoria": "Praia",
+      "data_cadastro": "2025-06-03T00:00:00Z"
+    }
+  },
+  {
+    "model": "turismo.pontoturistico",
+    "pk": 2,
+    "fields": {
+      "nome": "Ilha de Moçambique",
+      "descricao": "Patrimônio Mundial da UNESCO com história e cultura.",
+      "localizacao": "Nampula",
+      "categoria": "Histórico",
+      "data_cadastro": "2025-06-03T00:00:00Z"
+    }
+  },
+  {
+    "model": "turismo.pontoturistico",
+    "pk": 3,
+    "fields": {
+      "nome": "Parque Nacional da Gorongosa",
+      "descricao": "Um dos maiores parques naturais da África.",
+      "localizacao": "Sofala",
+      "categoria": "Natureza",
+      "data_cadastro": "2025-06-03T00:00:00Z"
+    }
+  },
+  {
+    "model": "turismo.pontoturistico",
+    "pk": 4,
+    "fields": {
+      "nome": "Catedral de Maputo",
+      "descricao": "Importante construção religiosa em estilo moderno.",
+      "localizacao": "Maputo",
+      "categoria": "Religioso",
+      "data_cadastro": "2025-06-03T00:00:00Z"
+    }
+  },
+  {
+    "model": "turismo.pontoturistico",
+    "pk": 5,
+    "fields": {
+      "nome": "Mercado Central de Maputo",
+      "descricao": "Mercado tradicional com produtos locais.",
+      "localizacao": "Maputo",
+      "categoria": "Cultural",
+      "data_cadastro": "2025-06-03T00:00:00Z"
+    }
+  },
+  {
+    "model": "turismo.pontoturistico",
+    "pk": 6,
+    "fields": {
+      "nome": "Ponta do Ouro",
+      "descricao": "Destino turístico para mergulho e praia.",
+      "localizacao": "Maputo",
+      "categoria": "Praia",
+      "data_cadastro": "2025-06-03T00:00:00Z"
+    }
+  },
+  {
+    "model": "turismo.pontoturistico",
+    "pk": 7,
+    "fields": {
+      "nome": "Praia de Tofo",
+      "descricao": "Conhecida por suas águas cristalinas e mergulho.",
+      "localizacao": "Inhambane",
+      "categoria": "Praia",
+      "data_cadastro": "2025-06-03T00:00:00Z"
+    }
+  },
+  {
+    "model": "turismo.pontoturistico",
+    "pk": 8,
+    "fields": {
+      "nome": "Museu da Revolução",
+      "descricao": "Relata a história da luta de libertação nacional.",
+      "localizacao": "Maputo",
+      "categoria": "Histórico",
+      "data_cadastro": "2025-06-03T00:00:00Z"
+    }
+  },
+  {
+    "model": "turismo.pontoturistico",
+    "pk": 9,
+    "fields": {
+      "nome": "Ilhas Quirimbas",
+      "descricao": "Arquipélago com belas praias e corais.",
+      "localizacao": "Cabo Delgado",
+      "categoria": "Natureza",
+      "data_cadastro": "2025-06-03T00:00:00Z"
+    }
+  },
+  {
+    "model": "turismo.pontoturistico",
+    "pk": 10,
+    "fields": {
+      "nome": "Museu de História Natural",
+      "descricao": "Exposições de animais e história natural de Moçambique.",
+      "localizacao": "Maputo",
+      "categoria": "Cultural",
+      "data_cadastro": "2025-06-03T00:00:00Z"
+    }
+  },
+  {
+    "model": "turismo.pontoturistico",
+    "pk": 11,
+    "fields": {
+      "nome": "Fortaleza de Maputo",
+      "descricao": "Construção histórica usada na colonização.",
+      "localizacao": "Maputo",
+      "categoria": "Histórico",
+      "data_cadastro": "2025-06-03T00:00:00Z"
+    }
+  },
+  {
+    "model": "turismo.pontoturistico",
+    "pk": 12,
+    "fields": {
+      "nome": "Baía de Inhambane",
+      "descricao": "Local tranquilo com beleza natural e cultura.",
+      "localizacao": "Inhambane",
+      "categoria": "Natureza",
+      "data_cadastro": "2025-06-03T00:00:00Z"
+    }
+  },
+  {
+    "model": "turismo.pontoturistico",
+    "pk": 13,
+    "fields": {
+      "nome": "Cabo Delgado Falls",
+      "descricao": "Cachoeiras escondidas em paisagens naturais.",
+      "localizacao": "Cabo Delgado",
+      "categoria": "Natureza",
+      "data_cadastro": "2025-06-03T00:00:00Z"
+    }
+  },
+  {
+    "model": "turismo.pontoturistico",
+    "pk": 14,
+    "fields": {
+      "nome": "Ilha Bazaruto",
+      "descricao": "Ilha paradisíaca com águas azuis e areia branca.",
+      "localizacao": "Inhambane",
+      "categoria": "Praia",
+      "data_cadastro": "2025-06-03T00:00:00Z"
+    }
+  },
+  {
+    "model": "turismo.pontoturistico",
+    "pk": 15,
+    "fields": {
+      "nome": "Centro Cultural Franco-Moçambicano",
+      "descricao": "Centro com eventos artísticos e culturais.",
+      "localizacao": "Maputo",
+      "categoria": "Cultural",
+      "data_cadastro": "2025-06-03T00:00:00Z"
+    }
+  },
+  {
+    "model": "turismo.pontoturistico",
+    "pk": 16,
+    "fields": {
+      "nome": "Monte Namuli",
+      "descricao": "Montanha famosa para ecoturismo e escaladas.",
+      "localizacao": "Zambézia",
+      "categoria": "Natureza",
+      "data_cadastro": "2025-06-03T00:00:00Z"
+    }
+  },
+  {
+    "model": "turismo.pontoturistico",
+    "pk": 17,
+    "fields": {
+      "nome": "Museu Nacional de Arte",
+      "descricao": "Obras de arte moçambicanas de várias épocas.",
+      "localizacao": "Maputo",
+      "categoria": "Cultural",
+      "data_cadastro": "2025-06-03T00:00:00Z"
+    }
+  },
+  {
+    "model": "turismo.pontoturistico",
+    "pk": 18,
+    "fields": {
+      "nome": "Praia de Bilene",
+      "descricao": "Praia com lagoa calma ideal para lazer.",
+      "localizacao": "Gaza",
+      "categoria": "Praia",
+      "data_cadastro": "2025-06-03T00:00:00Z"
+    }
+  },
+  {
+    "model": "turismo.pontoturistico",
+    "pk": 19,
+    "fields": {
+      "nome": "Palácio dos Casamentos",
+      "descricao": "Edifício histórico usado para cerimônias.",
+      "localizacao": "Maputo",
+      "categoria": "Histórico",
+      "data_cadastro": "2025-06-03T00:00:00Z"
+    }
+  },
+  {
+    "model": "turismo.pontoturistico",
+    "pk": 20,
+    "fields": {
+      "nome": "Catedral de Nampula",
+      "descricao": "Marco arquitetônico importante na cidade.",
+      "localizacao": "Nampula",
+      "categoria": "Religioso",
+      "data_cadastro": "2025-06-03T00:00:00Z"
+    }
+  }
+]
