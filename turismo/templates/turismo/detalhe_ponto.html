@@ -1,20 +1,63 @@
-{% extends 'turismo/base.html' %} {% block conteudo %}
-<h2 class="text-2xl font-bold mb-4">{{ lugar.nome }}</h2>
-<p class="mb-2">{{ lugar.descricao }}</p>
+{% extends 'turismo/base.html' %}
+{% block content %}
+<div class="container py-8">
+  <div class="bg-white rounded-lg shadow-lg p-6 md:p-8" data-aos="fade-up" data-aos-duration="1000">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- Image Section -->
+      <div class="flex justify-center items-center">
+        {% if lugar.imagem %}
+        <img
+          src="{{ lugar.imagem.url }}"
+          class="w-full h-auto max-h-[500px] object-cover rounded-lg shadow-md transition-transform duration-300 hover:scale-105"
+          alt="{{ lugar.nome }}"
+        />
+        {% else %}
+        <div
+          class="flex items-center justify-center bg-gray-200 rounded-lg shadow-md w-full h-[300px] text-gray-500 text-lg font-medium"
+        >
+          <i class="fas fa-image mr-2"></i> Sem imagem disponível
+        </div>
+        {% endif %}
+      </div>
 
-<h3 class="mt-6 text-lg font-semibold">Avaliações</h3>
-<ul class="mt-2">
-  {% for avaliacao in avaliacoes %}
-  <li class="bg-gray-50 p-2 border rounded mb-2">
-    <strong>{{ avaliacao.visitante.user.username }}</strong>: {{ avaliacao.nota
-    }} ⭐ - "{{ avaliacao.comentario }}"
-  </li>
-  {% empty %}
-  <p>Sem avaliações ainda.</p>
-  {% endfor %}
-</ul>
+      <!-- Details Section -->
+      <div>
+        <h2 class="text-3xl font-extrabold text-blue-600 mb-4">{{ lugar.nome }}</h2>
+        <p class="text-gray-600 leading-relaxed mb-6">{{ lugar.descricao }}</p>
 
-<a href="{% url 'turismo:avaliar' lugar.id %}" class="btn btn-primary mt-4"
-  >Avaliar este lugar</a
->
+        <hr class="my-4 border-gray-300" />
+
+        <div class="space-y-3">
+          <p class="flex items-center text-gray-700">
+            <i class="fas fa-map-marker-alt mr-2 text-blue-500"></i>
+            <strong>Localização:</strong> {{ lugar.localizacao }}
+          </p>
+          <p class="flex items-center text-gray-700">
+            <i class="fas fa-tag mr-2 text-blue-500"></i>
+            <strong>Categoria:</strong> {{ lugar.categoria }}
+          </p>
+          <p class="flex items-center text-gray-700">
+            <i class="fas fa-star mr-2 text-yellow-500"></i>
+            <strong>Avaliação média:</strong> {{ lugar.media_avaliacoes|default:"Ainda sem avaliações" }}
+          </p>
+        </div>
+
+        <div class="mt-6 flex space-x-4">
+          <a
+            href="{% url 'turismo:avaliar' lugar.id %}"
+            class="inline-flex items-center bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors duration-300"
+          >
+            <i class="fas fa-star-half-alt mr-2"></i> Avaliar este local
+          </a>
+          <a
+            href="{% url 'turismo:recomendacoes' %}"
+            class="inline-flex items-center border border-blue-500 text-blue-500 px-4 py-2 rounded-lg hover:bg-blue-50 transition-colors duration-300"
+          >
+            <i class="fas fa-thumbs-up mr-2"></i> Recomendações para você
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 {% endblock %}

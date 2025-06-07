@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect
-from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth import login, logout, authenticate, get_user_model
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.decorators import login_required
 from .forms import RegistroUsuarioForm
 from django.contrib import messages
+
+User = get_user_model()
 
 def registrar_usuario(request):
     if request.method == 'POST':
@@ -37,6 +39,30 @@ def login_usuario(request):
     else:
         form = AuthenticationForm()
     return render(request, 'usuarios/login.html', {'form': form})
+
+
+@login_required
+def editar_perfil(request):
+    if request.method == 'POST':
+        form = RegistroUsuarioForm(request.POST, request.FILES, instance=request.user)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Perfil atualizado com sucesso.')
+            return redirect('usuarios:perfil')
+    else:
+        form = RegistroUsuarioForm(instance=request.user)
+    return render(request, 'usuarios/editar_perfil.html', {'form': form})
+
+
+@login_required
+def apagar_perfil(request):
+    if request.method == 'POST':
+        user = request.user
+        logout(request)
+        user.delete()
+        messages.success(request, 'Conta apagada com sucesso.')
+        return redirect('usuarios:registro')
+    return render(request, 'usuarios/confirmar_apagar.html')
 
 
 def logout_usuario(request):

@@ -1,27 +1,87 @@
-{% extends 'turismo/base.html' %} {% block content %}
-<div class="container mx-auto max-w-md p-6 mt-10 bg-white rounded-xl shadow-md">
-  <h2 class="text-2xl font-bold mb-4 text-center">Criar Conta</h2>
-  <form method="post" enctype="multipart/form-data" class="space-y-4">
-    {% csrf_token %} {% for field in form %}
-    <div class="form-group">
-      <label class="block font-medium">{{ field.label_tag }}</label>
-      {{ field }} {% if field.errors %}
-      <div class="text-red-500 text-sm">{{ field.errors|striptags }}</div>
+{% extends 'turismo/base.html' %}
+{% load static %}
+{% block content %}
+<div class="container min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-100 via-gray-50 to-blue-100 py-12">
+  <div class="max-w-md w-full mx-auto" data-aos="zoom-in" data-aos-duration="800">
+    <div class="bg-white rounded-3xl shadow-2xl p-8 md:p-10">
+      <div class="text-center mb-10">
+        <img src="{% static 'images/logotipo.png' %}" alt="Logotipo" class="mx-auto h-24 w-auto mb-6">
+        <h2 class="text-4xl font-extrabold text-gray-900">Criar Conta</h2>
+      </div>
+
+      <!-- Feedback Message -->
+      {% if messages %}
+        <div class="mb-6 p-4 bg-green-50 text-green-800 rounded-xl flex items-center justify-center" data-aos="fade-in" data-aos-duration="600">
+          <i class="fas fa-check-circle mr-2"></i>
+          {% for message in messages %}
+            <span>{{ message }}</span>
+          {% endfor %}
+        </div>
       {% endif %}
+
+      <form method="post" enctype="multipart/form-data" class="space-y-6">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+
+        {% for field in form %}
+          <div class="form-group">
+            <label for="{{ field.id_for_label }}" class="block text-sm font-semibold text-gray-700 mb-2">
+              <i class="fas fa-{{ field.label|lower|slugify|default:'user' }} mr-1 text-indigo-600"></i> {{ field.label }}
+            </label>
+            <div class="relative">
+              {% if field.field.widget.input_type == 'file' %}
+                <input
+                  type="file"
+                  name="{{ field.name }}"
+                  id="{{ field.id_for_label }}"
+                  class="block w-full border border-gray-200 rounded-xl px-4 py-3.5 focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600 transition duration-300 sm:text-sm shadow-sm"
+                >
+              {% elif field.field.widget.input_type == 'password' %}
+                <input
+                  type="password"
+                  name="{{ field.name }}"
+                  id="{{ field.id_for_label }}"
+                  class="block w-full border border-gray-200 rounded-xl px-4 py-3.5 focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600 transition duration-300 sm:text-sm shadow-sm"
+                  placeholder="Digite {{ field.label|lower }}"
+                  required
+                >
+              {% else %}
+                <input
+                  type="{{ field.field.widget.input_type|default:'text' }}"
+                  name="{{ field.name }}"
+                  id="{{ field.id_for_label }}"
+                  value="{{ field.value|default_if_none:'' }}"
+                  class="block w-full border border-gray-200 rounded-xl px-4 py-3.5 focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600 transition duration-300 sm:text-sm shadow-sm"
+                  placeholder="Digite {{ field.label|lower }}"
+                  required
+                >
+              {% endif %}
+              {% if field.errors %}
+                <div class="text-red-500 text-xs mt-1">{{ field.errors|striptags }}</div>
+              {% endif %}
+            </div>
+          </div>
+        {% endfor %}
+
+        <div class="mt-8">
+          <button
+            type="submit"
+            class="w-full bg-gradient-to-r from-indigo-600 to-blue-600 text-white px-4 py-3.5 rounded-xl hover:from-indigo-700 hover:to-blue-700 transition-all duration-300 flex items-center justify-center text-sm font-semibold shadow-md"
+          >
+            <i class="fas fa-user-plus mr-2"></i> Registrar
+          </button>
+        </div>
+      </form>
+
+      <div class="mt-6 text-center">
+        <p class="text-sm text-gray-600">
+          Já tem uma conta?
+          <a href="{% url 'usuarios:login' %}" class="text-indigo-600 hover:text-indigo-800 font-semibold transition duration-200">
+            Fazer login
+          </a>
+        </p>
+      </div>
     </div>
-    {% endfor %}
-    <button
-      type="submit"
-      class="btn btn-primary w-full bg-blue-600 hover:bg-blue-700 text-white py-2 rounded"
-    >
-      Registrar
-    </button>
-    <p class="text-center mt-4">
-      Já tem conta?
-      <a href="{% url 'usuarios:login' %}" class="text-blue-600 hover:underline"
-        >Login</a
-      >
-    </p>
-  </form>
+  </div>
 </div>
 {% endblock %}

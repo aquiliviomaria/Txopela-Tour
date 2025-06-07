@@ -1,48 +1,121 @@
-{% extends 'turismo/base.html' %} {% block content %}
-<h2 class="text-xl font-semibold mb-4">Recomendações Personalizadas</h2>
+{% extends 'turismo/base.html' %}
+{% block content %}
+<div class="container py-12 px-4 sm:px-6 lg:px-8">
+  <!-- Filter Form -->
+  <div class="bg-gradient-to-r from-blue-50 to-blue-100 rounded-2xl shadow-xl p-8 mb-10" data-aos="fade-down" data-aos-duration="1000">
+    <h2 class="text-4xl font-extrabold text-blue-600 mb-6 text-center">
+      <i class="fas fa-compass mr-2"></i> Descubra Seu Próximo Destino
+    </h2>
+    <form method="get" class="space-y-6 max-w-2xl mx-auto">
+      <div class="relative">
+        <label for="id_localizacao" class="block text-lg font-semibold text-gray-700 mb-2 transition-all duration-300">
+          <i class="fas fa-map-marker-alt mr-2 text-blue-500"></i> Explore por destino
+        </label>
+        {{ form.localizacao }}
+        <span class="absolute right-4 top-12 text-gray-400">
+          <i class="fas fa-search-location"></i>
+        </span>
+      </div>
+      <div class="relative">
+        <label for="id_categoria" class="block text-lg font-semibold text-gray-700 mb-2 transition-all duration-300">
+          <i class="fas fa-tag mr-2 text-blue-500"></i> Escolha o tipo de experiência
+        </label>
+        {{ form.categoria }}
+        <span class="absolute right-4 top-12 text-gray-400">
+          <i class="fas fa-list-ul"></i>
+        </span>
+      </div>
+      <div class="flex justify-center gap-4">
+        <button
+          type="submit"
+          class="inline-flex items-center bg-blue-600 text-white px-6 py-3 rounded-lg font-medium text-lg hover:bg-blue-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:-translate-y-1"
+        >
+          <i class="fas fa-search mr-2"></i> Encontrar
+        </button>
+        <a
+          href="{% url 'turismo:recomendacoes' %}"
+          class="inline-flex items-center border-2 border-gray-300 text-gray-600 px-6 py-3 rounded-lg font-medium text-lg hover:bg-gray-100 transition-all duration-300"
+        >
+          <i class="fas fa-undo mr-2"></i> Limpar Filtros
+        </a>
+      </div>
+    </form>
+  </div>
 
-<!-- Formulário de Preferência -->
-<form
-  method="get"
-  class="mb-6 p-4 bg-white shadow rounded-lg grid grid-cols-1 md:grid-cols-2 gap-4"
->
-  <div>
-    <label for="id_localizacao" class="block text-sm font-medium"
-      >Localização</label
-    >
-    {{ form.localizacao }}
-  </div>
-  <div>
-    <label for="id_categoria" class="block text-sm font-medium"
-      >Categoria</label
-    >
-    {{ form.categoria }}
-  </div>
-  <div class="md:col-span-2 text-right">
-    <button
-      type="submit"
-      class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-    >
-      Buscar Recomendações
-    </button>
-  </div>
-</form>
+  <!-- Recommendations Section -->
+  <h1 class="text-4xl font-extrabold text-blue-600 mb-8 text-center" data-aos="fade-down" data-aos-duration="1000">
+    <i class="fas fa-thumbs-up mr-2"></i> Recomendações para Você
+  </h1>
 
-<!-- Lista de Recomendações -->
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-  {% for lugar in locais %}
-  <div class="bg-white p-4 rounded-lg shadow">
-    <h3 class="font-bold text-lg mb-2">{{ lugar.nome }}</h3>
-    <p>{{ lugar.descricao|truncatechars:120 }}</p>
-    <p class="text-sm text-gray-500">Categoria: {{ lugar.categoria }}</p>
-    <a
-      href="{% url 'turismo:detalhe_ponto' lugar.id %}"
-      class="text-blue-500 hover:underline"
-      >Ver detalhes</a
-    >
+  {% if locais %}
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    {% for local in locais %}
+    <div class="bg-white rounded-xl shadow-lg overflow-hidden transition-transform duration-300 hover:shadow-xl hover:scale-105" data-aos="fade-up" data-aos-delay="{% cycle '100' '200' '300' %}">
+      <!-- Image Section -->
+      <div class="relative">
+        {% if local.imagem %}
+        <img
+          src="{{ local.imagem.url }}"
+          class="w-full h-48 object-cover"
+          alt="{{ local.nome }}"
+        />
+        {% else %}
+        <div class="flex items-center justify-center bg-gray-200 h-48 text-gray-500 text-lg font-semibold">
+          <i class="fas fa-image mr-2"></i> Sem imagem
+        </div>
+        {% endif %}
+      </div>
+
+      <!-- Content Section -->
+      <div class="p-6">
+        <h3 class="text-xl font-bold text-blue-600 mb-2">{{ local.nome }}</h3>
+        <p class="text-gray-600 text-sm line-clamp-3 mb-4">{{ local.descricao }}</p>
+
+        <div class="space-y-2">
+          <p class="flex items-center text-gray-700 text-sm">
+            <i class="fas fa-map-marker-alt mr-2 text-blue-500"></i>
+            {{ local.localizacao }}
+          </p>
+          <p class="flex items-center text-gray-700 text-sm">
+            <i class="fas fa-tag mr-2 text-blue-500"></i>
+            {{ local.categoria }}
+          </p>
+          <p class="flex items-center text-gray-700 text-sm">
+            <i class="fas fa-star mr-2 text-yellow-500"></i>
+            {{ local.media_avaliacoes|default:"Sem avaliações" }}
+          </p>
+        </div>
+
+        <div class="mt-4 flex flex-wrap gap-3">
+          {% if local.id %}
+          <a
+            href="{% url 'turismo:avaliar' local.id %}"
+            class="inline-flex items-center bg-green-600 text-white px-4 py-2 rounded-lg font-medium text-sm hover:bg-green-700 transition-all duration-300"
+          >
+            <i class="fas fa-star-half-alt mr-2"></i> Avaliar
+          </a>
+          <a
+            href="{% url 'turismo:detalhe_ponto' local.id %}"
+            class="inline-flex items-center border-2 border-blue-500 text-blue-500 px-4 py-2 rounded-lg font-medium text-sm hover:bg-blue-50 transition-all duration-300"
+          >
+            <i class="fas fa-info-circle mr-2"></i> Ver Detalhes
+          </a>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+    {% empty %}
+    <div class="col-span-full text-center text-gray-500 py-10" data-aos="fade-up">
+      <i class="fas fa-exclamation-circle text-4xl mb-4"></i>
+      <p class="text-lg">Nenhuma recomendação disponível no momento.</p>
+    </div>
+    {% endfor %}
   </div>
-  {% empty %}
-  <p>Nenhum local encontrado com essas preferências.</p>
-  {% endfor %}
+  {% else %}
+  <div class="text-center text-gray-500 py-10" data-aos="fade-up">
+    <i class="fas fa-exclamation-circle text-4xl mb-4"></i>
+    <p class="text-lg">Nenhuma recomendação disponível no momento.</p>
+  </div>
+  {% endif %}
 </div>
 {% endblock %}
