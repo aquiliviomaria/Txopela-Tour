@@ -1,15 +1,38 @@
 {% extends 'turismo/base.html' %}
 {% load static %}
 {% block content %}
+
 <!-- Hero Section -->
-<section class="relative bg-cover bg-center bg-no-repeat h-[80vh] sm:h-[90vh] flex items-center justify-center" style="background-image: url('{% static 'turismo/imagens/hero-bg.jpg' %}');">
-  <div class="absolute inset-0 bg-gradient-to-r from-blue-900/70 to-blue-600/30"></div>
-  <div class="relative z-10 text-center text-white px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
-    <h1 class="text-4xl sm:text-5xl lg:text-7xl font-extrabold mb-6 tracking-tight drop-shadow-lg" data-aos="fade-down" data-aos-duration="1000">Bora conhecer Moz com o Txopela Tour</h1>
-    <p class="text-lg sm:text-xl lg:text-2xl mb-8 font-light opacity-90 drop-shadow-md" data-aos="fade-up" data-aos-delay="100">Explore destinos incríveis e viva experiências inesquecíveis.</p>
-    <a href="{% url 'turismo:recomendacoes' %}" class="inline-block bg-blue-600 text-white px-8 py-4 rounded-full font-semibold text-lg hover:bg-blue-700 transition-all duration-300 transform hover:scale-105 shadow-lg" data-aos="fade-up" data-aos-delay="200">Explorar Destinos</a>
+<section class="relative h-[85vh] sm:h-[95vh] flex items-center justify-center overflow-hidden">
+  <!-- Vídeo de fundo com bordas arredondadas -->
+  <video autoplay muted loop playsinline
+         class="absolute inset-0 w-full h-full object-cover brightness-100 contrast-105 rounded-3xl">
+    <source src="{% static 'media/hero.mp4' %}" type="video/mp4">
+    O seu navegador não suporta vídeos HTML5.
+  </video>
+
+  <!-- Gradiente muito suave (quase transparente) para suavizar bordas -->
+  <div class="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-black/10 z-0 rounded-3xl"></div>
+
+  <!-- Conteúdo do Hero, sem fundo para parecer dentro do vídeo -->
+  <div class="relative z-10 text-center text-white px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
+    <h1 class="text-5xl sm:text-6xl lg:text-7xl font-extrabold mb-6 tracking-tight drop-shadow-[0_4px_10px_rgba(0,0,0,0.8)]" data-aos="fade-down" data-aos-duration="1000">
+      Bora conhecer <span class="text-yellow-400">Moz</span> com o <span class="text-blue-300">Txopela Tour</span>
+    </h1>
+    <p class="text-xl sm:text-2xl lg:text-3xl mb-8 font-light drop-shadow-[0_2px_8px_rgba(0,0,0,0.7)]" data-aos="fade-up" data-aos-delay="100">
+      Explore destinos incríveis e viva experiências inesquecíveis.
+    </p>
+    <a href="{% url 'turismo:recomendacoes' %}" class="inline-flex items-center gap-2 bg-yellow-400 text-blue-900 px-8 py-4 rounded-full font-semibold text-lg hover:bg-yellow-300 transition-all duration-300 transform hover:scale-105 shadow-lg" data-aos="fade-up" data-aos-delay="200">
+      <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+        <path d="M12.293 3.293a1 1 0 011.414 0L18 7.586a2 2 0 010 2.828l-4.293 4.293a1 1 0 01-1.414-1.414L15.586 10H4a1 1 0 110-2h11.586l-3.293-3.293a1 1 0 010-1.414z"/>
+      </svg>
+      Explorar Destinos
+    </a>
   </div>
 </section>
+
+
+
 
 <!-- Main Content -->
 <div class="container py-16 max-w-full px-4 sm:px-6 lg:px-8">
