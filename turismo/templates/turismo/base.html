@@ -8,8 +8,17 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Lucide Icons (modernos, leves e personalizáveis) -->
     <script src="https://unpkg.com/lucide@latest"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="..." crossorigin="anonymous" />
-    <link rel="icon" href="{% static 'images/logotipo.png' %}" type="image/png" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+      integrity="..."
+      crossorigin="anonymous"
+    />
+    <link
+      rel="icon"
+      href="{% static 'images/logotipo.png' %}"
+      type="image/png"
+    />
     <style>
       /* Ícones + espaçamento */
       .nav-link i,
@@ -28,7 +37,7 @@
         color: #1e40af;
       }
       .nav-link::after {
-        content: '';
+        content: "";
         position: absolute;
         width: 0;
         height: 2px;
@@ -73,7 +82,7 @@
       }
       .social-icon:hover {
         background-color: #f3f4f6;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
         transform: scale(1.15);
       }
       .hamburger {
@@ -94,7 +103,7 @@
           left: 0;
           right: 0;
           background-color: white;
-          box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+          box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
           padding: 1rem;
           z-index: 50;
         }
@@ -110,35 +119,66 @@
   <body class="bg-gray-100 text-gray-900 flex flex-col min-h-screen">
     <!-- Navbar -->
     <header class="bg-white shadow sticky top-0 z-50">
-      <div class="container mx-auto flex justify-between items-center py-3 px-4 sm:px-6 lg:px-8">
+      <div
+        class="container mx-auto flex justify-between items-center py-3 px-4 sm:px-6 lg:px-8"
+      >
         <a href="/" class="flex items-center space-x-2 logo-container">
-          <img src="{% static 'images/logotipo.png' %}" alt="Logo" class="h-12 w-auto sm:h-14 md:h-16" />
-          <span class="text-xl sm:text-2xl md:text-3xl font-extrabold text-blue-600">Txopela Tour</span>
+          <img
+            src="{% static 'images/logotipo.png' %}"
+            alt="Logo"
+            class="h-12 w-auto sm:h-14 md:h-16"
+          />
+          <span
+            class="text-xl sm:text-2xl md:text-3xl font-extrabold text-blue-600"
+            >Txopela Tour</span
+          >
         </a>
-        <button class="hamburger text-blue-600 text-xl sm:text-2xl md:hidden focus:outline-none">
+        <button
+          class="hamburger text-blue-600 text-xl sm:text-2xl md:hidden focus:outline-none"
+        >
           <i class="fas fa-bars"></i>
         </button>
-        <nav class="nav-menu hidden md:flex items-center space-x-4 md:space-x-6">
-          <a href="{% url 'turismo:home' %}" class="nav-link {% if request.resolver_match.view_name == 'turismo:home' %}active{% endif %}">
+        <nav
+          class="nav-menu hidden md:flex items-center space-x-4 md:space-x-6"
+        >
+          <a
+            href="{% url 'turismo:home' %}"
+            class="nav-link {% if request.resolver_match.view_name == 'turismo:home' %}active{% endif %}"
+          >
             <i data-lucide="home"></i> Início
           </a>
-          <a href="{% url 'turismo:recomendacoes' %}" class="nav-link {% if request.resolver_match.view_name == 'turismo:recomendacoes' %}active{% endif %}">
+          <a
+            href="{% url 'turismo:recomendacoes' %}"
+            class="nav-link {% if request.resolver_match.view_name == 'turismo:recomendacoes' %}active{% endif %}"
+          >
             <i data-lucide="star"></i> Recomendações
           </a>
           {% if user.is_authenticated %}
-            <a href="{% url 'usuarios:perfil' %}" class="nav-link {% if request.resolver_match.view_name == 'usuarios:perfil' %}active{% endif %}">
-              <i data-lucide="user"></i> Perfil
-            </a>
-            <a href="{% url 'usuarios:logout' %}" class="nav-link text-red-600 {% if request.resolver_match.view_name == 'usuarios:logout' %}active{% endif %}">
-              <i data-lucide="log-out"></i> Sair
-            </a>
+          <a
+            href="{% url 'usuarios:perfil' %}"
+            class="nav-link {% if request.resolver_match.view_name == 'usuarios:perfil' %}active{% endif %}"
+          >
+            <i data-lucide="user"></i> Perfil
+          </a>
+          <a
+            href="{% url 'usuarios:logout' %}"
+            class="nav-link text-red-600 {% if request.resolver_match.view_name == 'usuarios:logout' %}active{% endif %}"
+          >
+            <i data-lucide="log-out"></i> Sair
+          </a>
           {% else %}
-            <a href="{% url 'usuarios:login' %}" class="nav-button {% if request.resolver_match.view_name == 'usuarios:login' %}active{% endif %}">
-              <i data-lucide="log-in"></i> Entrar
-            </a>
-            <a href="{% url 'usuarios:registro' %}" class="nav-button bg-blue-600 text-white hover:bg-blue-700 {% if request.resolver_match.view_name == 'usuarios:registro' %}active{% endif %}">
-              <i data-lucide="user-plus"></i> Registrar
-            </a>
+          <a
+            href="{% url 'usuarios:login' %}"
+            class="nav-button {% if request.resolver_match.view_name == 'usuarios:login' %}active{% endif %}"
+          >
+            <i data-lucide="log-in"></i> Entrar
+          </a>
+          <a
+            href="{% url 'usuarios:registro' %}"
+            class="nav-button bg-blue-600 text-white hover:bg-blue-700 {% if request.resolver_match.view_name == 'usuarios:registro' %}active{% endif %}"
+          >
+            <i data-lucide="user-plus"></i> Registrar
+          </a>
           {% endif %}
         </nav>
       </div>
@@ -154,57 +194,88 @@
       <div class="container mx-auto text-center text-sm text-gray-600 px-4">
         <div class="mb-4">
           <a href="/" class="flex justify-center items-center space-x-2">
-            <img src="{% static 'images/logotipo.png' %}" alt="Logo" class="h-6 w-auto sm:h-8" />
-            <span class="text-sm sm:text-base md:text-lg font-bold text-blue-600">Txopela Tour</span>
+            <img
+              src="{% static 'images/logotipo.png' %}"
+              alt="Logo"
+              class="h-6 w-auto sm:h-8"
+            />
+            <span
+              class="text-sm sm:text-base md:text-lg font-bold text-blue-600"
+              >Txopela Tour</span
+            >
           </a>
         </div>
-        <div class="mt-4 flex flex-col sm:flex-row justify-center space-y-3 sm:space-y-0 sm:space-x-6">
-          <a href="https://wa.me/1234567890" target="_blank" class="social-icon text-gray-600 hover:text-green-500" title="WhatsApp" aria-label="Abrir WhatsApp">
+        <div
+          class="mt-4 flex flex-col sm:flex-row justify-center space-y-3 sm:space-y-0 sm:space-x-6"
+        >
+          <a
+            href="https://wa.me/1234567890"
+            target="_blank"
+            class="social-icon text-gray-600 hover:text-green-500"
+            title="WhatsApp"
+            aria-label="Abrir WhatsApp"
+          >
             <i class="fab fa-whatsapp fa-lg sm:fa-2x"></i>
           </a>
-          <a href="https://www.linkedin.com/company/txopela-tour" target="_blank" class="social-icon text-gray-600 hover:text-blue-700" title="LinkedIn" aria-label="Abrir LinkedIn">
+          <a
+            href="https://www.linkedin.com/company/txopela-tour"
+            target="_blank"
+            class="social-icon text-gray-600 hover:text-blue-700"
+            title="LinkedIn"
+            aria-label="Abrir LinkedIn"
+          >
             <i class="fab fa-linkedin fa-lg sm:fa-2x"></i>
           </a>
-          <a href="https://github.com/txopela-tour" target="_blank" class="social-icon text-gray-600 hover:text-gray-900" title="GitHub" aria-label="Abrir GitHub">
+          <a
+            href="https://github.com/txopela-tour"
+            target="_blank"
+            class="social-icon text-gray-600 hover:text-gray-900"
+            title="GitHub"
+            aria-label="Abrir GitHub"
+          >
             <i class="fab fa-github fa-lg sm:fa-2x"></i>
           </a>
         </div>
-        <p class="mt-4 text-xs sm:text-sm md:text-base">© {{ now|date:"Y" }} Txopela Tour. Todos os direitos reservados.</p>
+        <p class="mt-4 text-xs sm:text-sm md:text-base">
+          © {{ now|date:"Y" }} Txopela Tour. Todos os direitos reservados.
+        </p>
       </div>
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
     <script>
       document.addEventListener("DOMContentLoaded", function () {
-        AOS.init({ once: true, duration: 800, easing: 'ease-out' });
+        AOS.init({ once: true, duration: 800, easing: "ease-out" });
 
         lucide.createIcons();
 
-        const hamburger = document.querySelector('.hamburger');
-        const navMenu = document.querySelector('.nav-menu');
-        hamburger.addEventListener('click', () => {
-          navMenu.classList.toggle('active');
-          hamburger.innerHTML = navMenu.classList.contains('active')
+        const hamburger = document.querySelector(".hamburger");
+        const navMenu = document.querySelector(".nav-menu");
+        hamburger.addEventListener("click", () => {
+          navMenu.classList.toggle("active");
+          hamburger.innerHTML = navMenu.classList.contains("active")
             ? '<i class="fas fa-times"></i>'
             : '<i class="fas fa-bars"></i>';
         });
 
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-          anchor.addEventListener('click', function (e) {
+        document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+          anchor.addEventListener("click", function (e) {
             e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
+            const target = document.querySelector(this.getAttribute("href"));
             if (target) {
-              target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              target.scrollIntoView({ behavior: "smooth", block: "start" });
             }
           });
         });
 
-        document.querySelectorAll('.nav-link, .nav-button').forEach(link => {
-          link.addEventListener('click', function () {
-            document.querySelectorAll('.nav-link, .nav-button').forEach(l => l.classList.remove('active'));
-            this.classList.add('active');
+        document.querySelectorAll(".nav-link, .nav-button").forEach((link) => {
+          link.addEventListener("click", function () {
+            document
+              .querySelectorAll(".nav-link, .nav-button")
+              .forEach((l) => l.classList.remove("active"));
+            this.classList.add("active");
             if (window.innerWidth < 768) {
-              navMenu.classList.remove('active');
+              navMenu.classList.remove("active");
               hamburger.innerHTML = '<i class="fas fa-bars"></i>';
             }
           });
