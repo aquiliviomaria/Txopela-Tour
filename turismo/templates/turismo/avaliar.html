@@ -1,64 +1,194 @@
 {% extends 'turismo/base.html' %}
+{% load static %}
 {% block content %}
-<div class="container py-8">
-  <div class="max-w-lg mx-auto" data-aos="fade-up" data-aos-duration="1000">
-    <div class="bg-white rounded-lg shadow-lg p-6 md:p-8">
-      <h3 class="text-2xl font-extrabold text-center text-green-600 mb-6">
-        <i class="fas fa-star mr-2"></i> Avaliar: {{ lugar.nome }}
-      </h3>
 
-      <!-- Feedback Message -->
-      {% if messages %}
-        <div class="mb-6 p-4 bg-green-100 text-green-700 rounded-lg flex items-center justify-center" data-aos="fade-in" data-aos-duration="800">
-          <i class="fas fa-check-circle mr-2"></i>
+<!-- Breadcrumb Navigation -->
+<nav class="container mx-auto px-4 sm:px-6 lg:px-8 py-4">
+  <ol class="flex items-center space-x-2 text-sm">
+    <li>
+      <a href="{% url 'turismo:home' %}" class="text-blue-600 hover:underline">Início</a>
+    </li>
+    <li>
+      <i class="ph ph-caret-right text-gray-400"></i>
+    </li>
+    <li>
+      <a href="{% url 'turismo:recomendacoes' %}" class="text-blue-600 hover:underline">Destinos</a>
+    </li>
+    <li>
+      <i class="ph ph-caret-right text-gray-400"></i>
+    </li>
+    <li>
+      <a href="{% url 'turismo:detalhe_ponto' lugar.id %}" class="text-blue-600 hover:underline">{{ lugar.nome|truncatechars:20 }}</a>
+    </li>
+    <li>
+      <i class="ph ph-caret-right text-gray-400"></i>
+    </li>
+    <li class="text-gray-500">Avaliar</li>
+  </ol>
+</nav>
+
+<!-- Main Content -->
+<main class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <div class="max-w-md mx-auto bg-white rounded-2xl shadow-xl overflow-hidden">
+    <!-- Header -->
+    <div class="bg-gradient-to-r from-blue-600 to-blue-500 p-6 text-center">
+      <h1 class="text-2xl sm:text-3xl font-bold text-white flex items-center justify-center gap-3">
+        <i class="ph ph-star-fill text-yellow-300"></i>
+        Avaliar {{ lugar.nome }}
+        <i class="ph ph-star-fill text-yellow-300"></i>
+      </h1>
+      <p class="text-blue-100 mt-2">Sua opinião ajuda outros viajantes!</p>
+    </div>
+
+    <!-- Feedback Message -->
+    {% if messages %}
+    <div class="bg-green-50 border-l-4 border-green-500 p-4 mx-6 mt-6 rounded-r-lg">
+      <div class="flex items-center">
+        <div class="flex-shrink-0">
+          <i class="ph ph-check-circle text-green-500 text-2xl"></i>
+        </div>
+        <div class="ml-3">
           {% for message in messages %}
-            <span>{{ message }}</span>
+          <p class="text-green-700">{{ message }}</p>
           {% endfor %}
         </div>
-      {% endif %}
+      </div>
+    </div>
+    {% endif %}
 
-      <form method="post">
+    <!-- Form Section -->
+    <div class="p-6 sm:p-8">
+      <form method="post" class="space-y-6">
         {% csrf_token %}
-        <div class="mb-5">
-          <label for="nota" class="block text-gray-700 font-semibold mb-2">
-            <i class="fas fa-star-half-alt mr-1 text-yellow-500"></i> Nota (1 a 5)
+        
+        <!-- Rating Input -->
+        <div>
+          <label class="block text-lg font-medium text-gray-700 mb-3">
+            Qual sua avaliação?
           </label>
-          <div class="relative">
-            <select name="nota" id="nota" class="block w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-green-500 focus:border-green-500 transition duration-300" required>
-              <option value="" disabled selected>Escolha uma nota</option>
-              {% for i in "12345" %}
-              <option value="{{ i }}" {% if form.nota.value == i %}selected{% endif %}>{{ i }}</option>
-              {% endfor %}
-            </select>
+          
+          <!-- Interactive Star Rating -->
+          <div class="flex justify-center mb-2" id="star-rating">
+            {% for i in "54321" %}
+            <input type="radio" id="star{{ i }}" name="nota" value="{{ i }}" 
+                   class="hidden" {% if form.nota.value == i %}checked{% endif %}>
+            <label for="star{{ i }}" class="text-3xl cursor-pointer px-1"
+                   onmouseover="highlightStars({{ i }})"
+                   onmouseout="resetStars()">
+              <i class="ph ph-star{% if form.nota.value and form.nota.value >= i %}-fill{% endif %} 
+                 text-gray-300 hover:text-yellow-400 transition-colors duration-200"
+                 id="star-icon-{{ i }}"></i>
+            </label>
+            {% endfor %}
           </div>
+          
+          <div class="flex justify-between text-sm text-gray-500">
+            <span>Não gostei</span>
+            <span>Adorei!</span>
+          </div>
+          
           {% if form.nota.errors %}
-            <div class="text-red-500 text-sm mt-1">{{ form.nota.errors.0 }}</div>
+          <div class="mt-2 text-red-500 text-sm">{{ form.nota.errors.0 }}</div>
           {% endif %}
         </div>
 
-        <div class="mb-5">
-          <label for="comentario" class="block text-gray-700 font-semibold mb-2">
-            <i class="fas fa-comment mr-1 text-blue-500"></i> Comentário (opcional)
+        <!-- Comment Input -->
+        <div>
+          <label for="comentario" class="block text-lg font-medium text-gray-700 mb-3">
+            <i class="ph ph-chat-circle-text text-blue-500 mr-2"></i>
+            Comentário (opcional)
           </label>
-          <textarea name="comentario" id="comentario" rows="4" class="block w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-green-500 focus:border-green-500 transition duration-300" placeholder="Escreva sua opinião...">{{ form.comentario.value|default:"" }}</textarea>
+          <textarea name="comentario" id="comentario" rows="4"
+                    class="block w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 transition duration-200"
+                    placeholder="Conte sua experiência...">{{ form.comentario.value|default:"" }}</textarea>
           {% if form.comentario.errors %}
-            <div class="text-red-500 text-sm mt-1">{{ form.comentario.errors.0 }}</div>
+          <div class="mt-2 text-red-500 text-sm">{{ form.comentario.errors.0 }}</div>
           {% endif %}
         </div>
 
-        <div class="mt-6">
-          <button type="submit" class="w-full bg-green-500 text-white px-4 py-3 rounded-lg hover:bg-green-600 transition-colors duration-300 flex items-center justify-center">
-            <i class="fas fa-check-circle mr-2"></i> Enviar Avaliação
+        <!-- Submit Button -->
+        <div class="pt-4">
+          <button type="submit"
+                  class="w-full flex items-center justify-center gap-2 px-6 py-3 border border-transparent rounded-lg shadow-sm text-lg font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-200">
+            <i class="ph ph-paper-plane-tilt"></i>
+            Enviar Avaliação
           </button>
         </div>
       </form>
 
+      <!-- Back Link -->
       <div class="mt-6 text-center">
-        <a href="{% url 'turismo:detalhe_ponto' lugar.id %}" class="text-blue-600 hover:underline flex items-center justify-center gap-2">
-          <i class="fas fa-arrow-left"></i> Voltar aos detalhes do ponto
+        <a href="{% url 'turismo:detalhe_ponto' lugar.id %}"
+           class="inline-flex items-center text-blue-600 hover:text-blue-800 transition-colors duration-200">
+          <i class="ph ph-arrow-left mr-2"></i>
+          Voltar para os detalhes
         </a>
       </div>
     </div>
   </div>
-</div>
+</main>
+
+<!-- Rating Interaction Script -->
+<script>
+  // Highlight stars on hover
+  function highlightStars(rating) {
+    for (let i = 1; i <= 5; i++) {
+      const star = document.getElementById(`star-icon-${i}`);
+      if (i <= rating) {
+        star.classList.remove('text-gray-300');
+        star.classList.add('text-yellow-400');
+      } else {
+        star.classList.remove('text-yellow-400');
+        star.classList.add('text-gray-300');
+      }
+    }
+  }
+
+  // Reset stars to current selection
+  function resetStars() {
+    const selectedRating = document.querySelector('input[name="nota"]:checked');
+    const currentRating = selectedRating ? parseInt(selectedRating.value) : 0;
+    
+    for (let i = 1; i <= 5; i++) {
+      const star = document.getElementById(`star-icon-${i}`);
+      if (i <= currentRating) {
+        star.classList.remove('text-gray-300');
+        star.classList.add('text-yellow-400');
+      } else {
+        star.classList.remove('text-yellow-400');
+        star.classList.add('text-gray-300');
+      }
+    }
+  }
+
+  // Initialize star rating
+  document.addEventListener('DOMContentLoaded', function() {
+    const stars = document.querySelectorAll('#star-rating input');
+    stars.forEach(star => {
+      star.addEventListener('change', function() {
+        resetStars();
+      });
+    });
+    
+    // Initialize with current rating
+    resetStars();
+  });
+</script>
+
+<style>
+  /* Smooth transitions */
+  #star-rating label i {
+    transition: all 0.2s ease;
+  }
+  
+  /* Form focus effects */
+  textarea:focus, select:focus {
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+  }
+  
+  /* Button hover effect */
+  button:hover {
+    transform: translateY(-1px);
+  }
+</style>
 {% endblock %}

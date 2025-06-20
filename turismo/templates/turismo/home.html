@@ -3,107 +3,242 @@
 {% block content %}
 
 <!-- Hero Section -->
-<section class="relative h-[85vh] sm:h-[95vh] flex items-center justify-center overflow-hidden">
-  <!-- Vídeo de fundo com bordas arredondadas -->
-  <video autoplay muted loop playsinline
-         class="absolute inset-0 w-full h-full object-cover brightness-100 contrast-105 rounded-3xl">
-    <source src="{% static 'media/hero.mp4' %}" type="video/mp4">
-    O seu navegador não suporta vídeos HTML5.
-  </video>
+<section class="relative h-[90vh] max-h-[1000px] flex items-center justify-center overflow-hidden">
+  <!-- Vídeo de fundo com overlay e bordas suaves -->
+  <div class="absolute inset-0 overflow-hidden rounded-b-[40px]">
+    <video autoplay muted loop playsinline
+           class="w-full h-full object-cover brightness-95 contrast-105 saturate-110">
+      <source src="{% static 'media/hero.mp4' %}" type="video/mp4">
+      O seu navegador não suporta vídeos HTML5.
+    </video>
+    
+    <!-- Overlay gradiente suave -->
+    <div class="absolute inset-0 bg-gradient-to-t from-black/30 via-black/10 to-black/20"></div>
+  </div>
 
-  <!-- Gradiente muito suave (quase transparente) para suavizar bordas -->
-  <div class="absolute inset-0 bg-gradient-to-t from-black/10 via-transparent to-black/10 z-0 rounded-3xl"></div>
-
-  <!-- Conteúdo do Hero, sem fundo para parecer dentro do vídeo -->
-  <div class="relative z-10 text-center text-white px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
-    <h1 class="text-5xl sm:text-6xl lg:text-7xl font-extrabold mb-6 tracking-tight drop-shadow-[0_4px_10px_rgba(0,0,0,0.8)]" data-aos="fade-down" data-aos-duration="1000">
-      Bora conhecer <span class="text-yellow-400">Moz</span> com o <span class="text-blue-300">Txopela Tour</span>
+  <!-- Conteúdo do Hero -->
+  <div class="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-6xl mx-auto">
+    <h1 class="text-4xl sm:text-5xl lg:text-6xl xl:text-7xl font-bold mb-6 text-white leading-tight tracking-tight drop-shadow-lg">
+      Bora conhecer <span class="text-yellow-400">Moz</span> com o <br>
+      <span class="text-blue-300 bg-clip-text bg-gradient-to-r from-blue-300 to-blue-400">Txopela Tour</span>
     </h1>
-    <p class="text-xl sm:text-2xl lg:text-3xl mb-8 font-light drop-shadow-[0_2px_8px_rgba(0,0,0,0.7)]" data-aos="fade-up" data-aos-delay="100">
-      Explore destinos incríveis e viva experiências inesquecíveis.
+    
+    <p class="text-lg sm:text-xl lg:text-2xl mb-8 font-light text-white/90 max-w-2xl mx-auto drop-shadow-md">
+      Descubra os pontos turísticos mais incríveis e planeje sua próxima aventura.
     </p>
-    <a href="{% url 'turismo:recomendacoes' %}" class="inline-flex items-center gap-2 bg-yellow-400 text-blue-900 px-8 py-4 rounded-full font-semibold text-lg hover:bg-yellow-300 transition-all duration-300 transform hover:scale-105 shadow-lg" data-aos="fade-up" data-aos-delay="200">
-      <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-        <path d="M12.293 3.293a1 1 0 011.414 0L18 7.586a2 2 0 010 2.828l-4.293 4.293a1 1 0 01-1.414-1.414L15.586 10H4a1 1 0 110-2h11.586l-3.293-3.293a1 1 0 010-1.414z"/>
-      </svg>
-      Explorar Destinos
-    </a>
+    
+    <div class="flex flex-col sm:flex-row justify-center gap-4">
+      <a href="{% url 'turismo:recomendacoes' %}" 
+         class="inline-flex items-center justify-center gap-3 bg-yellow-400 hover:bg-yellow-300 text-blue-900 px-6 py-3 sm:px-8 sm:py-4 rounded-full font-semibold text-base sm:text-lg transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl">
+        <i class="ph ph-compass text-xl"></i>
+        Explorar Destinos
+      </a>
+      
+      <a href="#destinos" 
+         class="inline-flex items-center justify-center gap-3 bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white px-6 py-3 sm:px-8 sm:py-4 rounded-full font-medium text-base sm:text-lg transition-all duration-300 transform hover:scale-105 border border-white/20 hover:border-white/30">
+        <i class="ph ph-map-pin text-xl"></i>
+        Ver Pontos Turísticos
+      </a>
+    </div>
+  </div>
+  
+  <!-- Scroll indicator -->
+  <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+    <i class="ph ph-caret-double-down text-3xl text-white/80"></i>
   </div>
 </section>
 
-
-
-
 <!-- Main Content -->
-<div class="container py-16 max-w-full px-4 sm:px-6 lg:px-8">
-  <h2 class="text-center text-3xl sm:text-4xl font-bold text-gray-800 mb-12" data-aos="fade-up">Explore os Pontos Turísticos Belos de Moçambique!</h2>
+<section id="destinos" class="py-16 sm:py-20 lg:py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-white to-gray-50">
+  <div class="max-w-7xl mx-auto">
+    <div class="text-center mb-12 lg:mb-16">
+      <span class="inline-block px-3 py-1 text-sm font-medium text-blue-600 bg-blue-50 rounded-full mb-4">
+        Destinos Imperdíveis
+      </span>
+      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
+        Explore a Beleza de <span class="text-blue-600">Moçambique</span>
+      </h2>
+     
+    </div>
 
-  {% if lugares %}
-  <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 sm:gap-8">
-    {% for lugar in lugares %}
-    <div class="place-card opacity-0 translate-y-10" data-aos="fade-up" data-aos-delay="{% cycle '100' '200' %}">
-      <div class="bg-white rounded-2xl shadow-lg overflow-hidden w-full transition-all duration-500 hover:shadow-2xl hover:-translate-y-2">
+    {% if lugares %}
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 lg:gap-10">
+      {% for lugar in lugares %}
+      <div class="group relative overflow-hidden rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500">
         {% if lugar.imagem %}
-        <div class="relative w-full">
+        <div class="relative h-80 sm:h-96 overflow-hidden">
           <img
             src="{{ lugar.imagem.url }}"
-            class="w-full h-72 sm:h-80 md:h-96 lg:h-[28rem] object-cover transition-transform duration-500 group-hover:scale-105"
+            class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
             alt="{{ lugar.nome }}"
+            loading="lazy"
           />
-          <div class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-opacity duration-300"></div>
+          <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/30 to-transparent"></div>
         </div>
         {% else %}
-        <div class="flex items-center justify-center bg-gray-200 text-gray-500 w-full h-72 sm:h-80 md:h-96 lg:h-[28rem]">
-          <span class="text-lg sm:text-xl">Sem imagem disponível</span>
+        <div class="flex items-center justify-center bg-gray-100 text-gray-500 h-80 sm:h-96">
+          <i class="ph ph-image text-4xl"></i>
         </div>
         {% endif %}
-        <div class="p-6 sm:p-8 bg-gray-50">
-          <h5 class="text-xl sm:text-2xl font-semibold text-gray-800 mb-3 flex items-center">
-            <i class="fas fa-map-marker-alt text-blue-600 mr-2"></i>
-            {{ lugar.nome }}
-          </h5>
-          <p class="text-gray-600 text-base sm:text-lg mb-4 flex items-start">
-            <i class="fas fa-info-circle text-blue-600 mr-2 mt-1"></i>
-            {{ lugar.descricao|truncatewords:25 }}
-          </p>
-          <div class="flex flex-col sm:flex-row sm:gap-4">
-            <a
-              href="{% url 'turismo:detalhe_ponto' lugar.id %}"
-              class="inline-block bg-blue-50 text-blue-600 px-5 py-2 sm:px-6 sm:py-3 rounded-lg font-medium hover:bg-blue-100 transition-colors duration-300 mb-2 sm:mb-0 flex items-center"
-            >
-              <i class="fas fa-eye mr-2"></i>
-              Ver Detalhes
+        
+        <div class="absolute bottom-0 left-0 right-0 p-6 sm:p-8 text-white">
+          <div class="mb-2">
+            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-500 text-white">
+              <i class="ph ph-map-pin mr-1"></i> {{ lugar.provincia }}
+            </span>
+          </div>
+          <h3 class="text-xl sm:text-2xl font-bold mb-2">{{ lugar.nome }}</h3>
+          <p class="text-sm sm:text-base text-white/90 mb-4 line-clamp-2">{{ lugar.descricao }}</p>
+          
+          <div class="flex flex-wrap gap-2">
+            <a href="{% url 'turismo:detalhe_ponto' lugar.id %}" 
+               class="inline-flex items-center px-4 py-2 bg-white/90 hover:bg-white text-gray-900 rounded-lg font-medium transition-colors">
+              <i class="ph ph-eye mr-2"></i> Detalhes
             </a>
-            <a
-              href="{% url 'turismo:avaliar' lugar.id %}"
-              class="inline-block bg-green-50 text-green-600 px-5 py-2 sm:px-6 sm:py-3 rounded-lg font-medium hover:bg-green-100 transition-colors duration-300 flex items-center"
-            >
-              <i class="fas fa-star mr-2"></i>
-              Avaliar
+            <a href="{% url 'turismo:avaliar' lugar.id %}" 
+               class="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors">
+              <i class="ph ph-star mr-2"></i> Avaliar
             </a>
           </div>
         </div>
+        
+        <!-- Badge de avaliação -->
+        {% if lugar.media_avaliacoes %}
+        <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full shadow-sm flex items-center">
+          <i class="ph ph-star-fill text-yellow-500 mr-1"></i>
+          <span class="font-semibold text-gray-900">{{ lugar.media_avaliacoes|floatformat:1 }}</span>
+        </div>
+        {% endif %}
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="text-center py-12 bg-white rounded-2xl shadow-sm">
+      <i class="ph ph-binoculars text-5xl text-gray-400 mb-4"></i>
+      <h3 class="text-xl font-medium text-gray-700 mb-2">Nenhum ponto turístico encontrado</h3>
+      <p class="text-gray-500 mb-4">Parece que ainda não temos destinos cadastrados.</p>
+      <a href="{% url 'turismo:recomendacoes' %}" class="inline-flex items-center text-blue-600 hover:text-blue-700 font-medium">
+        <i class="ph ph-arrow-right mr-2"></i> Ver recomendações
+      </a>
+    </div>
+    {% endif %}
+    
+    {% if lugares.has_other_pages %}
+    <div class="mt-12 flex justify-center">
+      <div class="inline-flex rounded-md shadow-sm">
+        {% if lugares.has_previous %}
+        <a href="?page={{ lugares.previous_page_number }}" class="inline-flex items-center px-4 py-2 rounded-l-lg bg-white text-gray-700 hover:bg-gray-50 border border-gray-300">
+          <i class="ph ph-caret-left mr-2"></i> Anterior
+        </a>
+        {% endif %}
+        
+        {% for i in lugares.paginator.page_range %}
+          {% if lugares.number == i %}
+          <span class="inline-flex items-center px-4 py-2 bg-blue-600 text-white border border-blue-600">
+            {{ i }}
+          </span>
+          {% else %}
+          <a href="?page={{ i }}" class="inline-flex items-center px-4 py-2 bg-white text-gray-700 hover:bg-gray-50 border border-gray-300">
+            {{ i }}
+          </a>
+          {% endif %}
+        {% endfor %}
+        
+        {% if lugares.has_next %}
+        <a href="?page={{ lugares.next_page_number }}" class="inline-flex items-center px-4 py-2 rounded-r-lg bg-white text-gray-700 hover:bg-gray-50 border border-gray-300">
+          Próximo <i class="ph ph-caret-right ml-2"></i>
+        </a>
+        {% endif %}
       </div>
     </div>
-    {% endfor %}
+    {% endif %}
   </div>
-  {% else %}
-  <div class="text-center text-gray-500 mt-12" data-aos="fade-up">
-    <p class="text-lg sm:text-xl">Nenhum ponto turístico cadastrado ainda.</p>
-    <a href="{% url 'turismo:recomendacoes' %}" class="inline-block mt-4 text-blue-600 hover:underline font-medium">Veja nossas recomendações</a>
+</section>
+
+<!-- CTA Section -->
+<section class="py-16 sm:py-20 bg-gradient-to-r from-blue-600 to-blue-500">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <h2 class="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-6">
+      Pronto para sua próxima aventura?
+    </h2>
+    <p class="text-lg text-blue-100 max-w-3xl mx-auto mb-8">
+      Cadastre-se agora para receber recomendações personalizadas e ofertas exclusivas.
+    </p>
+    <div class="flex flex-col sm:flex-row justify-center gap-4">
+      <a href="{% url 'usuarios:registro' %}" class="inline-flex items-center justify-center gap-2 bg-white text-blue-600 hover:bg-gray-100 px-6 py-3 sm:px-8 sm:py-4 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg">
+        <i class="ph ph-user-plus"></i> Criar Conta
+      </a>
+      <a href="{% url 'turismo:recomendacoes' %}" class="inline-flex items-center justify-center gap-2 bg-transparent hover:bg-white/10 text-white border border-white px-6 py-3 sm:px-8 sm:py-4 rounded-full font-medium transition-all duration-300 transform hover:scale-105">
+        <i class="ph ph-compass"></i> Ver Destinos
+      </a>
+    </div>
   </div>
-  {% endif %}
-</div>
+</section>
+
+<style>
+  /* Animação suave para os cards */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .animate-fade-in-up {
+    animation: fadeInUp 0.6s ease-out forwards;
+  }
+  
+  /* Delay para animação dos cards */
+  .animation-delay-100 {
+    animation-delay: 0.1s;
+  }
+  
+  .animation-delay-200 {
+    animation-delay: 0.2s;
+  }
+  
+  /* Efeito hover para os cards */
+  .card-hover-effect {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .card-hover-effect:hover {
+    transform: translateY(-5px);
+  }
+</style>
 
 <script>
-  document.addEventListener("DOMContentLoaded", function () {
-    // Smooth transition for place cards
-    const placeCards = document.querySelectorAll(".place-card");
-    placeCards.forEach((card, index) => {
-      setTimeout(() => {
-        card.style.opacity = "1";
-        card.style.transform = "translateY(0)";
-      }, index * 200); // Staggered animation for each card
+  document.addEventListener('DOMContentLoaded', function() {
+    // Anima os cards quando entram na viewport
+    const cards = document.querySelectorAll('.group');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry, index) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-fade-in-up');
+          entry.target.style.animationDelay = `${index % 2 ? 0.1 : 0.2}s`;
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    
+    cards.forEach(card => observer.observe(card));
+    
+    // Smooth scroll para a seção de destinos
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          window.scrollTo({
+            top: target.offsetTop - 80,
+            behavior: 'smooth'
+          });
+        }
+      });
     });
   });
 </script>

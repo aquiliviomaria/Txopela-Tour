@@ -1,63 +1,260 @@
 {% extends 'turismo/base.html' %}
+{% load static %}
 {% block content %}
-<div class="container py-8">
-  <div class="bg-white rounded-lg shadow-lg p-6 md:p-8" data-aos="fade-up" data-aos-duration="1000">
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-      <!-- Image Section -->
-      <div class="flex justify-center items-center">
+
+<!-- Breadcrumb Navigation -->
+<nav class="container mx-auto px-4 sm:px-6 lg:px-8 py-4">
+  <ol class="flex items-center space-x-2 text-sm">
+    <li>
+      <a href="{% url 'turismo:home' %}" class="text-blue-600 hover:underline">Início</a>
+    </li>
+    <li>
+      <i class="ph ph-caret-right text-gray-400"></i>
+    </li>
+    <li>
+      <a href="{% url 'turismo:recomendacoes' %}" class="text-blue-600 hover:underline">Destinos</a>
+    </li>
+    <li>
+      <i class="ph ph-caret-right text-gray-400"></i>
+    </li>
+    <li class="text-gray-500 truncate max-w-xs">{{ lugar.nome }}</li>
+  </ol>
+</nav>
+
+<!-- Main Content -->
+<main class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+      <!-- Image Gallery Section -->
+      <div class="relative">
         {% if lugar.imagem %}
-        <img
-          src="{{ lugar.imagem.url }}"
-          class="w-full h-auto max-h-[500px] object-cover rounded-lg shadow-md transition-transform duration-300 hover:scale-105"
-          alt="{{ lugar.nome }}"
-        />
+        <div class="aspect-w-16 aspect-h-12 overflow-hidden rounded-t-2xl lg:rounded-l-2xl lg:rounded-tr-none">
+          <img
+            src="{{ lugar.imagem.url }}"
+            class="w-full h-full object-cover transition-all duration-500 hover:scale-105"
+            alt="{{ lugar.nome }}"
+            loading="lazy"
+          />
+        </div>
         {% else %}
-        <div
-          class="flex items-center justify-center bg-gray-200 rounded-lg shadow-md w-full h-[300px] text-gray-500 text-lg font-medium"
-        >
-          <i class="fas fa-image mr-2"></i> Sem imagem disponível
+        <div class="flex flex-col items-center justify-center bg-gray-100 text-gray-500 h-96 rounded-t-2xl lg:rounded-l-2xl lg:rounded-tr-none">
+          <i class="ph ph-image text-5xl mb-4"></i>
+          <span class="text-lg font-medium">Sem imagem disponível</span>
+        </div>
+        {% endif %}
+        
+        <!-- Floating Rating Badge -->
+        {% if lugar.media_avaliacoes %}
+        <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-2 rounded-full shadow-md flex items-center">
+          <i class="ph ph-star-fill text-yellow-500 mr-1"></i>
+          <span class="font-semibold text-gray-900">{{ lugar.media_avaliacoes|floatformat:1 }}</span>
+          <span class="text-xs text-gray-500 ml-1">({{ lugar.total_avaliacoes }})</span>
         </div>
         {% endif %}
       </div>
 
       <!-- Details Section -->
-      <div>
-        <h2 class="text-3xl font-extrabold text-blue-600 mb-4">{{ lugar.nome }}</h2>
-        <p class="text-gray-600 leading-relaxed mb-6">{{ lugar.descricao }}</p>
-
-        <hr class="my-4 border-gray-300" />
-
-        <div class="space-y-3">
-          <p class="flex items-center text-gray-700">
-            <i class="fas fa-map-marker-alt mr-2 text-blue-500"></i>
-            <strong>Localização:</strong> {{ lugar.localizacao }}
-          </p>
-          <p class="flex items-center text-gray-700">
-            <i class="fas fa-tag mr-2 text-blue-500"></i>
-            <strong>Categoria:</strong> {{ lugar.categoria }}
-          </p>
-          <p class="flex items-center text-gray-700">
-            <i class="fas fa-star mr-2 text-yellow-500"></i>
-            <strong>Avaliação média:</strong> {{ lugar.media_avaliacoes|default:"Ainda sem avaliações" }}
-          </p>
+      <div class="p-6 sm:p-8">
+        <div class="mb-6">
+          <div class="flex items-center justify-between">
+            <h1 class="text-3xl sm:text-4xl font-bold text-gray-900">{{ lugar.nome }}</h1>
+            <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
+              <i class="ph ph-tag mr-1"></i> {{ lugar.categoria }}
+            </span>
+          </div>
+          
+          <div class="flex items-center mt-2 text-gray-600">
+            <i class="ph ph-map-pin text-blue-500 mr-2"></i>
+            <span>{{ lugar.localizacao }}</span>
+          </div>
         </div>
 
-        <div class="mt-6 flex space-x-4">
-          <a
-            href="{% url 'turismo:avaliar' lugar.id %}"
-            class="inline-flex items-center bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors duration-300"
-          >
-            <i class="fas fa-star-half-alt mr-2"></i> Avaliar este local
+        <div class="prose max-w-none text-gray-700 mb-8">
+          <p class="text-lg leading-relaxed">{{ lugar.descricao }}</p>
+        </div>
+
+        <!-- Highlights -->
+        <div class="grid grid-cols-2 gap-4 mb-8">
+          <div class="bg-blue-50 p-4 rounded-lg">
+            <div class="flex items-center">
+              <div class="p-2 bg-blue-100 rounded-full mr-3">
+                <i class="ph ph-sun text-blue-600"></i>
+              </div>
+              <div>
+                <p class="text-xs text-gray-500">Melhor época</p>
+                <p class="font-medium">Todo o ano</p>
+              </div>
+            </div>
+          </div>
+          
+          <div class="bg-green-50 p-4 rounded-lg">
+            <div class="flex items-center">
+              <div class="p-2 bg-green-100 rounded-full mr-3">
+                <i class="ph ph-currency-dollar text-green-600"></i>
+              </div>
+              <div>
+                <p class="text-xs text-gray-500">Preço médio</p>
+                <p class="font-medium">Acessível</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="flex flex-col sm:flex-row gap-4">
+          <a href="{% url 'turismo:avaliar' lugar.id %}" 
+             class="flex-1 flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-300">
+            <i class="ph ph-star"></i> Avaliar este local
           </a>
-          <a
-            href="{% url 'turismo:recomendacoes' %}"
-            class="inline-flex items-center border border-blue-500 text-blue-500 px-4 py-2 rounded-lg hover:bg-blue-50 transition-colors duration-300"
-          >
-            <i class="fas fa-thumbs-up mr-2"></i> Recomendações para você
+          
+          <a href="{% url 'turismo:recomendacoes' %}" 
+             class="flex-1 flex items-center justify-center gap-2 bg-white border border-blue-600 text-blue-600 hover:bg-blue-50 px-6 py-3 rounded-lg font-medium transition-colors duration-300">
+            <i class="ph ph-compass"></i> Ver mais destinos
           </a>
         </div>
       </div>
     </div>
+
+    <!-- Additional Info Section -->
+    <div class="border-t border-gray-200 p-6 sm:p-8">
+      <h2 class="text-2xl font-bold text-gray-900 mb-6">Informações Adicionais</h2>
+      
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- How to Get There -->
+        <div>
+          <h3 class="flex items-center text-lg font-semibold text-gray-900 mb-4">
+            <i class="ph ph-car text-blue-500 mr-2"></i> Como chegar
+          </h3>
+          <p class="text-gray-700">
+            O local está situado em {{ lugar.localizacao }}. Recomendamos o uso de transporte próprio ou táxi para maior comodidade.
+          </p>
+        </div>
+        
+        <!-- Best Time to Visit -->
+        <div>
+          <h3 class="flex items-center text-lg font-semibold text-gray-900 mb-4">
+            <i class="ph ph-calendar-blank text-blue-500 mr-2"></i> Melhor época
+          </h3>
+          <p class="text-gray-700">
+            Este destino pode ser visitado durante todo o ano, com condições climáticas favoráveis em qualquer estação.
+          </p>
+        </div>
+      </div>
+    </div>
   </div>
-</div>
+
+  <!-- Reviews Section -->
+  {% if avaliacoes %}
+  <div class="mt-12 bg-white rounded-2xl shadow-xl overflow-hidden">
+    <div class="p-6 sm:p-8 border-b border-gray-200">
+      <h2 class="text-2xl font-bold text-gray-900">Avaliações</h2>
+      <p class="text-gray-600">O que os visitantes estão dizendo</p>
+    </div>
+    
+    <div class="divide-y divide-gray-200">
+      {% for avaliacao in avaliacoes %}
+      <div class="p-6 sm:p-8">
+        <div class="flex items-start">
+          <div class="flex-shrink-0">
+            <div class="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
+              <i class="ph ph-user"></i>
+            </div>
+          </div>
+          
+          <div class="ml-4 flex-1">
+            <div class="flex items-center justify-between">
+              <h4 class="font-medium text-gray-900">
+                {{ avaliacao.usuario.username|default:"Anônimo" }}
+              </h4>
+              <div class="flex items-center text-yellow-500">
+                {% for i in "12345" %}
+                  {% if forloop.counter <= avaliacao.classificacao %}
+                    <i class="ph ph-star-fill"></i>
+                  {% else %}
+                    <i class="ph ph-star"></i>
+                  {% endif %}
+                {% endfor %}
+              </div>
+            </div>
+            
+            <div class="mt-1 text-sm text-gray-500">
+              {{ avaliacao.data_avaliacao|date:"d/m/Y" }}
+            </div>
+            
+            <div class="mt-2 text-gray-700">
+              <p>{{ avaliacao.comentario }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+</main>
+
+<!-- CTA Section -->
+<section class="bg-gradient-to-r from-blue-600 to-blue-500 py-12 sm:py-16 mt-12">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <h2 class="text-2xl sm:text-3xl font-bold text-white mb-4">
+      Gostou deste destino?
+    </h2>
+    <p class="text-lg text-blue-100 max-w-2xl mx-auto mb-6">
+      Descubra outros lugares incríveis que temos para você explorar em Moçambique.
+    </p>
+    <a href="{% url 'turismo:recomendacoes' %}" 
+       class="inline-flex items-center justify-center gap-2 bg-white text-blue-600 hover:bg-gray-100 px-6 py-3 sm:px-8 sm:py-4 rounded-full font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg">
+      <i class="ph ph-compass"></i> Explorar mais destinos
+    </a>
+  </div>
+</section>
+
+<style>
+  /* Smooth transitions */
+  .prose img {
+    transition: transform 0.3s ease;
+  }
+  
+  .prose img:hover {
+    transform: scale(1.02);
+  }
+  
+  /* Rating stars */
+  .star-rating i {
+    transition: color 0.2s ease;
+  }
+  
+  /* Gallery hover effect */
+  .gallery-image {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  .gallery-image:hover {
+    transform: scale(1.03);
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+  }
+</style>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Smooth scroll to reviews if URL has #reviews anchor
+    if (window.location.hash === '#reviews') {
+      const reviewsSection = document.querySelector('#reviews');
+      if (reviewsSection) {
+        setTimeout(() => {
+          reviewsSection.scrollIntoView({ behavior: 'smooth' });
+        // Add temporary highlight
+          reviewsSection.style.transition = 'box-shadow 0.5s ease';
+          reviewsSection.style.boxShadow = '0 0 0 4px rgba(59, 130, 246, 0.3)';
+          setTimeout(() => {
+            reviewsSection.style.boxShadow = 'none';
+          }, 2000);
+        }, 300);
+      }
+    }
+    
+    // Initialize any gallery functionality if needed
+    // This would be expanded if you add an image gallery
+  });
+</script>
 {% endblock %}
